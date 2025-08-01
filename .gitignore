@@ -1,0 +1,7 @@
+venv/
+
+data/events/*.csv
+data/raw/*.csv
+data/processed/*.csv
+
+.vscode/
