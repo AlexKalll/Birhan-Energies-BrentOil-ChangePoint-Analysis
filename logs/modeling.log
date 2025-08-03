@@ -1,0 +1,27 @@
+-----------------
+the last part of the logging actions
+-----------------
+2025-08-03 18:26:05,662 - __main__ - INFO - Model fitting complete.
+2025-08-03 18:26:05,663 - __main__ - INFO - 
+--- Model Inference Summary ---
+2025-08-03 18:26:05,762 - __main__ - INFO -           
+        mean     sd  hdi_2.5%  hdi_97.5%  mcse_mean  mcse_sd  ess_bulk  ess_tail  r_hat
+tau    214.140  1.993   211.000    218.000      0.109    0.096     353.0     255.0    1.0
+mu1     21.402  1.287    18.853     23.865      0.027    0.026    2339.0    1633.0    1.0
+mu2     75.790  1.337    73.135     78.345      0.026    0.030    2742.0    1756.0    1.0
+sigma   18.560  0.656    17.368     19.936      0.012    0.016    2904.0    1553.0    1.0
+
+# This below is from the terminal
+
+Multiprocess sampling (2 chains in 2 jobs)
+CompoundStep
+>Metropolis: [tau]
+>NUTS: [mu1, mu2, sigma]
+
+  Progress                         Draws   Tuning   Scaling   Accept Rate   Divergences   Step size   Grad evals   Sampling Speed   Elapsed   Remaining  
+ ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   2000    False    3.54      3.43          0             1.05        3            313.86 draws/s   0:00:06   0:00:00    
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   2000    False    3.54      0.00          0             0.94        3            149.20 draws/s   0:00:13   0:00:00    
+
+Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 33 seconds.
+We recommend running at least 4 chains for robust computation of convergence diagnostics
