@@ -3,7 +3,7 @@ from flask import jsonify
 import numpy as np
 import os
 import arviz as az
-from . import config
+import config
 
 # --- Data Loading and Processing ---
 def load_data():
