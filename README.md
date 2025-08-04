@@ -112,6 +112,8 @@ The frontend is a React application that consumes data from the Flask API and vi
     npm run dev
     ```
     The dashboard will typically open in your browser at `http://localhost:5173/` (or a similar port). Ensure your backend server is running *before* starting the frontend.
+    You will find an UI like this below:
+![UI](docs/image.png)
 
 ## Future Works
 
