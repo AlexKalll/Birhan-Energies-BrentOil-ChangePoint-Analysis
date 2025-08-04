@@ -47,15 +47,22 @@ const Chart = ({ data, events, changePointDate }) => {
                 stroke="#10b981" 
                 className="cursor-pointer"
               >
-                <Tooltip />
-                <div style={{ pointerEvents: 'none' }}>{event.Event}</div>
+
               </ReferenceDot>
             ) : null;
           })}
         </LineChart>
       </ResponsiveContainer>
+      {changePointDate && (
+        <div className="mt-4 text-center text-gray-700">
+          <p className="font-semibold">Inferred Change Point: {changePointDate}</p>
+        </div>
+      )}
     </div>
   );
 };
+
+
+
 
 export default Chart;
