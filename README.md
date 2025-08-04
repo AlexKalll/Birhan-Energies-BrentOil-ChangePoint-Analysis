@@ -8,16 +8,16 @@ This project contains the code and documentation for the "Brent Oil Change Point
 * `events/`: Stores the curated dataset of key historical events.
 * `src/`: Houses the core Python scripts for data preparation, modeling, and analysis.
 * `notebooks/`: Includes the Jupyter notebook for exploratory data analysis (EDA).
-* `docs/`: Contains project documentation.
+* `docs/`: Contains project documentation, including detailed analysis insights.
 * `reports/`: Stores generated reports and visualizations.
-* `dashboard/`: Holds the code for the interactive frontend and backend.
+* `dashboard/`: Holds the code for the interactive frontend (React/Vite) and backend (Flask).
 
 ## Getting Started
 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/alexkalll/Birhan-Energies-BrentOil-ChangePoint-Analysis.git
+git clone [https://github.com/alexkalll/Birhan-Energies-BrentOil-ChangePoint-Analysis.git](https://github.com/alexkalll/Birhan-Energies-BrentOil-ChangePoint-Analysis.git)
 cd Birhan-Energies-BrentOil-ChangePoint-Analysis
 ```
 
@@ -60,6 +60,64 @@ Follow the steps below to run the full analysis workflow:
     python src/analysis.py
     ```
 
+### 4\. Detailed Analysis and Insights (Task 2)
+
+The core analysis of the Brent oil price series is documented in `docs/analysis_and_insights.md`. This document details:
+
+  * The implementation of the Bayesian Change Point detection model using PyMC3.
+  * The identification of statistically significant structural breaks (change points) in the Brent oil price series.
+  * The association of detected change points with researched key events.
+  * A quantitative description of the impact of these changes (e.g., shift in mean price).
+
+You can review the detailed findings in `docs/analysis_and_insights.md`.
+
+### 5\. Interactive Dashboard (Task 3)
+
+An interactive dashboard has been developed using Flask (backend) and React (frontend) to visualize the analysis results.
+
+#### 5.1. Running the Backend (Flask API)
+
+The backend provides API endpoints to serve the processed data and events to the frontend.
+
+1.  Navigate to the backend directory:
+    ```bash
+    cd dashboard/backend
+    ```
+2.  Install the Python dependencies for the backend:
+    ```bash
+    pip install -r requirements.txt
+    ```
+3.  Run the Flask application. **Ensure you specify a port, e.g., 5001, if port 5000 is in use.**
+    ```bash
+    python app.py --port 3000
+    ```
+    The API will be accessible, e.g., at `http://localhost:5001/api/data` and `http://localhost:5001/api/events`.
+
+#### 5.2. Running the Frontend (React with Vite)
+
+The frontend is a React application that consumes data from the Flask API and visualizes it.
+
+1.  Navigate to the frontend directory:
+    ```bash
+    cd ../frontend
+    ```
+2.  Install the Node.js dependencies:
+    ```bash
+    npm install
+    # Also ensure recharts is installed
+    npm install recharts
+    ```
+3.  Start the Vite development server:
+    ```bash
+    npm run dev
+    ```
+    The dashboard will typically open in your browser at `http://localhost:5173/` (or a similar port). Ensure your backend server is running *before* starting the frontend.
+
 ## Future Works
-- Task 2: Change Point Modeling and Insight Generation
-- Task 3: Integrate the interactive dashboard into the project.
+
+While the core objectives of change point detection and dashboard creation are complete, there are several avenues for advanced analysis and enhancement:
+
+  * **Explore Other Potential Factors:** Incorporate other macroeconomic data sources (e.g., GDP, inflation rates, exchange rates) to build a more comprehensive explanatory model.
+  * **Consider Advanced Models:** Implement other models like VAR (Vector Autoregression) to analyze dynamic relationships between oil prices and macroeconomic variables, or Markov-Switching models to define and detect different market regimes (e.g., 'calm' vs. 'volatile').
+  * **Enhanced Frontend Features:** Add more interactive elements to the dashboard, such as date range filters, event selection, and comparison tools.
+  * **Deployment:** Containerize the entire application using Docker and deploy it to a cloud platform (e.g., AWS, Azure, GCP) for broader accessibility.
