@@ -9,15 +9,17 @@ const App = () => {
   const [changePointDate, setChangePointDate] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const pricesResponse = await fetch('http://localhost:5000/api/data');
+        const pricesResponse = await fetch('http://localhost:3000/api/data');
         if (!pricesResponse.ok) throw new Error('Failed to fetch prices data');
         const pricesResult = await pricesResponse.json();
         
-        const eventsResponse = await fetch('http://localhost:5000/api/events');
+        const eventsResponse = await fetch('http://localhost:3000/api/events');
         if (!eventsResponse.ok) throw new Error('Failed to fetch events data');
         const eventsResult = await eventsResponse.json();
 
@@ -34,6 +36,13 @@ const App = () => {
         setData(processedPrices);
         setEvents(processedEvents);
         setChangePointDate(pricesResult.change_point_date);
+
+        // Initialize date range with full data range
+        if (processedPrices.length > 0) {
+          const years = processedPrices.map(item => item.Date);
+          setStartDate(Math.min(...years).toString());
+          setEndDate(Math.max(...years).toString());
+        }
       } catch (err) {
         setError(err.message);
       } finally {
@@ -47,6 +56,28 @@ const App = () => {
   if (loading) return <div className="flex justify-center items-center h-screen bg-gray-100 text-gray-800">Loading...</div>;
   if (error) return <div className="flex justify-center items-center h-screen bg-red-100 text-red-800">Error: {error}</div>;
 
+  const handleStartDateChange = (e) => {
+    setStartDate(e.target.value);
+  };
+
+  const handleEndDateChange = (e) => {
+    setEndDate(e.target.value);
+  };
+
+  const filteredData = data.filter(item => {
+    const itemYear = item.Date;
+    const startYear = parseInt(startDate);
+    const endYear = parseInt(endDate);
+    return itemYear >= startYear && itemYear <= endYear;
+  });
+
+  const filteredEvents = events.filter(event => {
+    const eventYear = event.Date.getFullYear();
+    const startYear = parseInt(startDate);
+    const endYear = parseInt(endDate);
+    return eventYear >= startYear && eventYear <= endYear;
+  });
+
   return (
     <div className="min-h-screen bg-gray-100 p-8 flex flex-col items-center">
       <h1 className="text-4xl font-bold text-gray-800 mb-6 text-center">
@@ -57,7 +88,27 @@ const App = () => {
         significant change point detected by a Bayesian model and comparing it with
         key historical events.
       </p>
-      <Chart data={data} events={events} changePointDate={changePointDate} />
+      <div className="flex space-x-4 mb-6">
+        <label className="flex flex-col">
+          Start Year:
+          <input
+            type="number"
+            value={startDate}
+            onChange={handleStartDateChange}
+            className="mt-1 p-2 border border-gray-300 rounded-md"
+          />
+        </label>
+        <label className="flex flex-col">
+          End Year:
+          <input
+            type="number"
+            value={endDate}
+            onChange={handleEndDateChange}
+            className="mt-1 p-2 border border-gray-300 rounded-md"
+          />
+        </label>
+      </div>
+      <Chart data={filteredData} events={filteredEvents} changePointDate={changePointDate} />
     </div>
   );
 };
